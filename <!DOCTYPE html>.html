@@ -1,0 +1,1940 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FUTURES X TKU - 未來學家之旅</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root {
+    --bg:#000;
+    --text:#ffffff;
+    --maxw:1200px;
+    --card-bg: rgba(13, 13, 15, 0.8);
+    --accent-blue: #00BFFF;
+    --intro-blue: #0d1b2a;
+    --schedule-sand: #4a3f35;
+    --transition-brown: #2d2822;
+  }
+
+  @media(max-width:900px){
+    .hero-inner{flex-direction:column;align-items:center;text-align:center;padding:30px;} 
+    .left-col{align-items:center;padding-left:0;} 
+    .headline{font-size:32px;} 
+    .subline{font-size:18px;} 
+  }
+
+  /* 核心資訊區轉化式轉場樣式 */
+  #intro {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .intro-bg-wrapper {
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .intro-bg-item {
+    /* 背景圖層級控制 */
+    z-index: 1;
+  }
+
+  /* 人物圖樣式 */
+  .person-img {
+    /* 初始狀態：右側隱藏感 */
+    opacity: 0.9;
+    transition: all 1.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* 文字容器樣式 */
+  .intro-container {
+    /* 初始隱藏，滾動後顯示 */
+    transition-delay: 0.5s;
+  }
+
+  .info-text {
+    color: white;
+    line-height: 1.8;
+  }
+
+  /* 響應式調整 */
+  @media (max-width: 768px) {
+    .person-img {
+      max-width: 200px;
+      right: 5vw;
+    }
+    .info-text {
+      row-gap: 60px;
+    }
+  }
+
+  .intro-container.visible {
+    opacity: 1;
+    transform: translate(0);
+  }
+
+  /* 逐字顯示動畫 */
+  .word-by-word {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+  }
+
+  .word-by-word span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(5px);
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  
+  #intro .info-card {
+    position: relative;
+    z-index: 30; /* 确保卡片在最上层 */
+    background: rgba(20, 20, 30, 0.8);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(0, 191, 255, 0.3);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    transition: all 0.3s ease;
+  }
+  
+  #intro .info-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(0, 191, 255, 0.6);
+    box-shadow: 0 8px 25px rgba(0, 191, 255, 0.1);
+  }
+  
+  #intro .info-card h4 {
+    color: #93c5fd;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  #intro .info-card p {
+    color: #e5e5e5;
+    line-height: 1.4;
+    font-size: 0.9rem;
+  }
+  
+  /* 核心資訊樣式（整合PPT圖片與卡片） */
+  .intro-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  /* 信息卡片樣式 */
+  .info-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  
+  .info-card {
+    position: relative;
+    z-index: 20;
+    background: rgba(20, 20, 30, 0.8);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(0, 191, 255, 0.3);
+    border-radius: 0.8rem;
+    padding: 1.2rem;
+    transition: all 0.3s ease;
+  }
+  
+  .info-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(0, 191, 255, 0.6);
+    box-shadow: 0 10px 30px rgba(0, 191, 255, 0.1);
+  }
+  
+  .info-card h4 {
+    color: var(--accent-blue);
+    font-size: 1.2rem;
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .info-card p {
+    color: #e5e5e5;
+    line-height: 1.6;
+    font-size: 1rem;
+  }
+  
+  .info-card-icon {
+    font-size: 1.3rem;
+  }
+  
+  .location-card {
+    grid-column: 1 / -1;
+  }
+  
+  /* 響應式設計 */
+  @media (max-width: 768px) {
+    .core-info {
+      padding: 40px 20px;
+    }
+    
+    .core-info h2 {
+      font-size: 2rem;
+    }
+    
+    .info-cards {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    
+    .info-card {
+      padding: 1.2rem;
+    }
+  }
+  
+  /* 粒子背景樣式 */
+  .particle-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #000;
+    z-index: -1;
+  }
+  #particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* 確保內容在粒子背景之上 */
+  #app-content {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .hero{
+    height:100vh;
+    min-height:480px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    /* 使用影片背景：影片標籤會放在此區塊內（若無影片，會顯示 var(--bg) 背景色或 poster） */
+    background-color: var(--bg);
+    position:relative;
+    color:var(--text);
+    overflow:hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg,rgba(0,0,0,0.7) 0%, rgba(8,8,8,0.8) 60%);
+    z-index: 1;
+  }
+
+  /* Hero 背景影片樣式 */
+  #bg-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+
+  /* Hero CTA 顯示延遲控制 */
+  #cta-schedule {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    pointer-events: none;
+  }
+  #cta-schedule.cta-visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  /* 👇 从这里开始是新增的 Hero 区域文字样式 */
+  .hero-inner{
+    position: relative;
+    z-index: 2;
+    width:100%;
+    max-width:var(--maxw);
+    padding:40px;
+    padding-top: 25vh; /* 將內容往下推 */
+    box-sizing:border-box;
+    display:flex;
+    gap:40px;
+    align-items:flex-start;
+  }
+  .center-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+  .left-col{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding-left:20px;}
+  
+  .headline{
+    font-size:40px;
+    line-height:1.1;
+    font-weight:700;
+    text-align:center;
+    color:var(--text);
+    opacity:0;
+    transform:translateY(8px) scale(.95);
+    animation:show 1s forwards;
+  }
+  .subline{
+    font-size:20px;
+    line-height:1.25;
+    color:var(--text);
+    opacity:0;
+    transform:translateY(12px) scale(.95);
+    margin: 8px 0; /* 增加文字间距 */
+  }
+  
+  .subline:nth-child(1){animation:zoomIn 1s 0.4s forwards;}
+  .subline:nth-child(2){animation:zoomIn 1s 2.0s forwards;}
+  .subline:nth-child(3){
+    animation: flipIn 0.6s 1.5s forwards;
+    transform-origin: bottom;
+  }
+
+  /* Hero 文字動畫定義 */
+  @keyframes show {
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes zoomIn {
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes flipIn {
+    0% {
+      opacity: 0;
+      transform: perspective(400px) rotateX(90deg);
+    }
+    100% {
+      opacity: 1;
+      transform: perspective(400px) rotateX(0deg);
+    }
+  }
+
+  @media(max-width:900px){
+    .hero-inner{flex-direction:column;align-items:center;text-align:center;padding:30px;} 
+    .left-col{align-items:center;padding-left:0;} 
+    .headline{font-size:32px;} 
+    .subline{font-size:18px;} 
+  }
+
+  /* 時間軸折疊程樣式 */
+  .schedule-header {
+    transition: color 0.2s;
+  }
+  .schedule-header:hover {
+    color: rgba(255, 255, 255, 0.8);
+  }
+  /* 展開時的內容動畫 */
+  .schedule-content.active {
+    max-height: 100px; /* 足夠顯示內容的高度 */
+    padding-bottom: 10px;
+  }
+  /* 圖標旋轉動畫 */
+  .schedule-icon.active {
+    transform: rotate(45deg); /* + 號旋轉成 × 號 */
+  }
+  /* 核心資訊樣式（整合PPT圖片與卡片） */
+  .intro-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .ppt-images {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  .ppt-img {
+    width: 100%;
+    height: auto;
+    border-radius: 0.8rem;
+    border: 1px solid rgba(0, 191, 255, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .ppt-img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 20px rgba(0, 191, 255, 0.2);
+  }
+  .info-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+  /* 信息卡片樣式優化 */
+  .info-card {
+    position: relative;
+    z-index: 20;
+    background: rgba(20, 20, 30, 0.8); /* 半透明背景 */
+    backdrop-filter: blur(4px); /* 毛玻璃效果 */
+    border: 1px solid rgba(0, 191, 255, 0.3);
+    border-radius: 0.8rem;
+    padding: 1.2rem;
+    transition: all 0.3s ease;
+  }
+  .info-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(0, 191, 255, 0.6);
+  }
+  .info-card h4 {
+    color: var(--accent-blue);
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .info-card p {
+    color: var(--text);
+    line-height: 1.5;
+  }
+  .info-card-icon {
+    font-size: 1.2rem;
+  }
+  .location-card {
+    grid-column: 1 / -1; /* 集合地點卡片跨所有列 */
+  }
+
+  /* 背景圖片容器樣式 */
+  .intro-bg-container {
+    overflow: hidden;
+  }
+  .intro-bg {
+    object-fit: cover;
+    filter: brightness(0.5); /* 降低亮度增強文字對比 */
+  }
+
+  /* 響應式調整 */
+  @media (max-width: 1024px) {
+    .grid {
+      grid-template-columns: 1fr !important;
+    }
+    .sticky {
+      position: static;
+      margin-top: 20px;
+    }
+  }
+
+  /* 分頁切換動畫樣式 */
+  #current-section, #core-info-section {
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  
+  #current-section.active, #core-info-section.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .bg-accent-blue {
+    background-color: var(--accent-blue);
+  }
+  
+  .bg-accent-blue:hover {
+    background-color: rgba(0, 191, 255, 0.8);
+  }
+
+  /* 響應式調整（補充） */
+  @media(max-width:900px){
+    .ppt-images {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* 詳細行程 Hero 區樣式 */
+  .schedule-hero {
+    height: 100vh;
+    min-height: 400px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .schedule-bg {
+    position: absolute;
+    inset: 0;
+  }
+  
+  .hero-inner {
+    height: 100%;
+  }
+  
+  /* 響應式調整 - 在小螢幕上縮小字體 */
+  @media (max-width: 768px) {
+    .text-white p {
+      font-size: 40pt !important;
+    }
+    .text-white span {
+      padding: 2px 16px !important;
+    }
+  }
+  /* 首頁到第二頁過渡樣式 */
+  #hero {
+    position: relative;
+    z-index: 10;
+    transition: transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  /* 滾動時首頁向上縮小並淡化 */
+  .hero-scrolled {
+    transform: translateY(-30%) scale(0.9);
+    opacity: 0.5;
+    pointer-events: none; /* 避免干擾第二頁交互 */
+  }
+
+  /* 核心資訊區到詳細行程過渡樣式 */
+  #intro {
+    position: relative;
+    z-index: 20;
+    padding-bottom: 200px;
+    background: linear-gradient(to bottom, var(--intro-blue) 80%, var(--transition-brown) 100%);
+    transition: opacity 1.2s ease;
+  }
+  
+  .intro-transitioning {
+    opacity: 0.2;
+  }
+  
+  .intro-transitioning .person-img {
+    opacity: 0 !important;
+    transform: scale(0.5) translateY(-50%) !important;
+    transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .intro-transitioning .intro-container {
+    opacity: 0 !important;
+    transform: translateY(-30px) !important;
+    transition: all 1.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* 共用元素：行程入口標記 */
+  .schedule-entrance {
+    position: absolute;
+    bottom: 12rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 30;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
+  
+  .intro-transitioning .schedule-entrance {
+    opacity: 1;
+  }
+  
+  /* 中間過渡帶 */
+  .transition-bridge {
+    position: relative;
+    z-index: 15;
+    height: 16rem;
+    background: linear-gradient(to bottom, var(--transition-brown) 0%, var(--schedule-sand) 100%);
+    pointer-events: none;
+  }
+
+  /* 詳細行程Hero區過渡樣式 */
+  .schedule-hero {
+    position: relative;
+    z-index: 10;
+    margin-top: -4rem;
+    background-color: var(--schedule-sand);
+  }
+  
+  .schedule-hero .schedule-bg {
+    opacity: 0;
+    transition: opacity 1.5s ease-out;
+  }
+  
+  .schedule-hero.schedule-visible .schedule-bg {
+    opacity: 1;
+  }
+  
+  .schedule-hero .hero-inner > div {
+    transform: translateY(40px);
+    opacity: 0;
+    transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  
+  .schedule-hero.schedule-visible .hero-inner > div {
+    transform: translateY(0);
+    opacity: 1;
+    transition-delay: 0.3s;
+  }
+
+  /* 過渡標記 */
+  .transition-marker {
+    position: absolute;
+    bottom: 200px;
+    height: 1px;
+    width: 100%;
+    pointer-events: none;
+  }
+  /* 首頁遮罩隨滾動加深 */
+  .hero-overlay {
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%);
+    opacity: 0;
+  }
+  .hero-overlay.scrolled { opacity: 1; }
+  /* 第二頁背景圖隨滾動漸顯 */
+  .intro-bg-item { transition: opacity 1.5s ease; }
+  .intro-bg-visible { opacity: 1 !important; }
+  /* 滾動提示動畫 */
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(5px); }
+  }
+  .scroll-indicator .animate-bounce { animation: bounce 1.5s infinite; }
+
+  /* 倒計時簡易排版（可再美化） */
+  .countdown { display: flex; gap: 16px; align-items: baseline; }
+  .countdown-item { display: flex; align-items: baseline; gap: 6px; }
+  .countdown-number { font-size: 1.6rem; font-weight: 700; }
+  .countdown-label { font-size: 0.9rem; opacity: 0.8; }
+  /* Hero 微調：垂直位置與行距 */
+  #hero .hero-inner { padding-top: 22vh; }
+  #hero .headline { line-height: 1.12; margin-bottom: 0.5rem; }
+  #hero .left-col .subline { line-height: 1.35; margin: 0.25rem 0; }
+
+  @media (max-width: 768px) {
+    #hero .hero-inner { padding-top: 16vh; }
+    #hero .left-col .subline { line-height: 1.3; margin: 0.2rem 0; }
+  }
+
+  /* 倒計時：字級與間距（桌機與手機） */
+  .countdown { display: flex; gap: 16px; align-items: baseline; flex-wrap: nowrap; }
+  .countdown-item { display: flex; align-items: baseline; gap: 6px; }
+  .countdown-number { font-size: 2rem; font-weight: 700; }
+  .countdown-label { font-size: 0.95rem; opacity: 0.85; }
+
+  @media (max-width: 768px) {
+    .countdown { gap: 10px; row-gap: 6px; flex-wrap: wrap; justify-content: center; }
+    .countdown-number { font-size: 1.2rem; }
+    .countdown-label { font-size: 0.75rem; }
+  }
+
+  @media (max-width: 360px) {
+    .countdown { gap: 8px; }
+    .countdown-number { font-size: 1.1rem; }
+    .countdown-label { font-size: 0.7rem; }
+  }
+
+  /* Intro 區：左側直排標題 */
+  .vertical-title {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    letter-spacing: 0.05em;
+    margin: 0; /* 移除底部間距，交由 flex 間距控制 */
+    white-space: nowrap;
+  }
+
+  /* 直立分隔線與間距調整 */
+  .vertical-divider {
+    width: 1px;
+    background: rgba(255, 255, 255, 0.28);
+    align-self: stretch; /* 與右側內容同高 */
+    margin: 0 0.5rem; /* 與左右內容的緩衝距離 */
+  }
+  @media (max-width: 768px) {
+    .vertical-divider { margin: 0 0.4rem; background: rgba(255, 255, 255, 0.22); }
+  }
+
+  /* 讓 intro 的容器改為左右排列：標題在左、資訊網格在右，間距更緊鄰 */
+  #intro .intro-container { flex-direction: row; align-items: center; gap: 10px; }
+  @media (max-width: 768px) {
+    #intro .intro-container { flex-direction: column; align-items: flex-start; gap: 8px; }
+  }
+
+  /* 「核心資訊」標題改為直排顯示（置左） */
+  #intro .vertical-title { writing-mode: vertical-rl; text-orientation: upright; }
+
+  /* 標題左側細直線（隨標題高度）與緊鄰間距 */
+  .vertical-title-wrap {
+    display: flex;
+    align-items: center;
+    border-left: 1px solid rgba(255, 255, 255, 0.28);
+    padding-left: 6px; /* 緊鄰標題的內距 */
+    margin-right: 10px; /* 與右側內容的緩衝距離 */
+  }
+  @media (max-width: 768px) {
+    .vertical-title-wrap { padding-left: 4px; margin-right: 8px; }
+  }
+
+  /* 核心資訊區樣式 */
+  .core-info-section {
+    position: relative;
+    padding: 0 6px;
+    box-sizing: border-box;
+  }
+
+  /* 響應式布局調整（僅在核心資訊區內） */
+  @media (max-width: 768px) {
+    .core-person {
+      max-w-xs mx-auto mt-12;
+    }
+    .core-text {
+      position: relative;
+      top: 0;
+      left: 0;
+      max-w-full;
+      text-align: center;
+      margin: 20px auto;
+    }
+    .core-text h2 {
+      font-size: 3xl;
+    }
+  }
+</style>
+</head>
+<body class="bg-[#0d0d0f] text-gray-100">
+  <!-- 粒子背景容器 -->
+  <div class="particle-background">
+    <div id="particles"></div>
+  </div>
+
+  <!-- 主要內容包裝器 -->
+  <div id="app-content">
+  <!-- Header -->
+  <header class="fixed w-full top-0 z-50 bg-black/80 backdrop-blur-sm border-b border-gray-800">
+    <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+      <h1 class="text-xl tracking-wide">FUTURES X TKU</h1>
+      <nav id="menu" class="hidden md:flex space-x-6">
+        <a href="#intro" class="hover:text-white text-gray-300">核心資訊</a>
+        <a href="#schedule" class="hover:text-white text-gray-300">詳細行程</a>
+        <a href="#preparation" class="hover:text-white text-gray-300">行前準備清單</a>
+        <a href="#notice" class="hover:text-white text-gray-300">重要事項</a>
+        <a href="#schedule" class="inline-flex items-center gap-2 bg-accent-blue text-black font-semibold px-4 py-2 rounded-md shadow hover:opacity-95 focus:outline-none focus:ring-2 focus:ring-cyan-300 transition">
+          行程總覽
+        </a>
+      </nav>
+      <button class="md:hidden text-2xl" onclick="toggleMenu()">☰</button>
+    </div>
+    <nav id="mobileMenu" class="hidden flex-col bg-black/95 md:hidden px-6 py-4 space-y-3 border-t border-gray-800">
+      <a href="#schedule" class="block bg-accent-blue text-black font-semibold px-4 py-2 rounded-md text-center">行程總覽</a>
+      <a href="#intro" class="block hover:text-white text-gray-300">核心資訊</a>
+      <a href="#schedule" class="block hover:text-white text-gray-300">詳細行程</a>
+      <a href="#preparation" class="block hover:text-white text-gray-300">行前準備清單</a>
+      <a href="#notice" class="block hover:text-white text-gray-300">重要事項</a>
+    </nav>
+  </header>
+
+  <!-- Hero區（首頁） -->
+  <section id="hero" class="hero" aria-label="TAMKANG CO-FUTURES Hero">
+    <video autoplay muted loop playsinline id="bg-video" poster="photo/DSC02176.jpg" aria-hidden="true">
+      <source src="1.mp4" type="video/mp4">
+      您的瀏覽器不支援影片播放。
+    </video>
+    <div class="particles" aria-hidden="true"></div>
+
+    <!-- 遮罩層（用於滾動時淡化） -->
+    <div class="hero-overlay absolute inset-0 bg-black/0 z-10 transition-all 1s ease"></div>
+
+    <div class="hero-inner relative z-20">
+      <div class="center-col">
+        <div class="headline hero-text">Designing the Future Together</div>
+        <!-- 首頁倒計時 -->
+        <div class="countdown mt-6" id="hero-countdown">
+          <div class="countdown-item">
+            <span id="days" class="countdown-number">00</span>
+            <span class="countdown-label">天</span>
+          </div>
+          <div class="countdown-item">
+            <span id="hours" class="countdown-number">00</span>
+            <span class="countdown-label">時</span>
+          </div>
+          <div class="countdown-item">
+            <span id="minutes" class="countdown-number">00</span>
+            <span class="countdown-label">分</span>
+          </div>
+          <div class="countdown-item">
+            <span id="seconds" class="countdown-number">00</span>
+            <span class="countdown-label">秒</span>
+          </div>
+        </div>
+      </div>
+      <div class="left-col" aria-live="polite">
+        <div class="subline hero-text">We don't predict the future</div>
+        <div class="subline hero-text">杜拜，見證未來的現場</div>
+        <div class="subline hero-text">未來學家的行動之旅</div>
+        <div class="subline hero-text">淡江未來共創團 — 2025</div>
+      </div>
+    </div>
+
+    <!-- 向下滾動提示 -->
+    <div class="scroll-indicator absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex flex-col items-center">
+      <span class="text-white/70 text-sm mb-2">向下探索</span>
+      <div class="w-6 h-10 border-2 border-white/70 rounded-full flex justify-center pt-2">
+        <div class="w-1 h-2 bg-white/70 rounded-full animate-bounce"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 核心資訊區（獨立完整，不含額外區塊） -->
+  <section id="intro" class="core-info-section relative min-h-[80vh] flex items-center overflow-hidden">
+    <!-- 1. 背景層 -->
+    <div class="core-bg absolute inset-0 z-0">
+      <img src="bg1.png" alt="杜拜場景" class="w-full h-full object-cover opacity-80">
+      <div class="absolute inset-0 bg-gradient-to-b from-slate-900/80 to-slate-900/90"></div>
+    </div>
+
+    <!-- 2. 人物層（立體浮動） -->
+    <div class="core-person relative z-10 w-full max-w-md mx-auto md:max-w-lg md:ml-auto md:mr-12 transform transition-all duration-1000 ease-out" style="opacity: 1; transform: translateY(0) scale(3);">
+      <img src="DSC02110.png" alt="團隊成員" class="w-full object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.4)]">
+    </div>
+
+    <!-- 3. 核心信息層（精簡文字） -->
+    <div class="core-text absolute top-1/4 left-6 md:left-12 max-w-md z-20">
+      <h2 class="text-4xl md:text-6xl font-bold text-white mb-6 opacity-1 transform translate-y-0 transition-all 0.8s ease">
+        杜拜未來<br><span class="text-blue-400">探索之旅</span>
+      </h2>
+      <div class="space-y-4 opacity-1 transform translate-y-0 transition-all 0.8s ease delay-200">
+        <p class="text-xl text-gray-300 flex items-center">
+          <i class="fa fa-calendar-o mr-3 text-blue-400"></i>
+          出發日期：2025/11/16
+        </p>
+        <p class="text-xl text-gray-300 flex items-center">
+          <i class="fa fa-users mr-3 text-blue-400"></i>
+          全團人數：9 人
+        </p>
+        <p class="text-xl text-gray-300 flex items-center">
+          <i class="fa fa-clock-o mr-3 text-blue-400"></i>
+          集合時間：2025/11/16 21:00
+        </p>
+        <p class="text-xl text-gray-300 flex items-center">
+          <i class="fa fa-map-marker mr-3 text-blue-400"></i>
+          集合地點：桃園國際機場第二航廈3F 阿聯酋航空(EK)櫃台23-24號
+        </p>
+        <p class="text-xl text-gray-300 flex items-center">
+          <i class="fa fa-user-circle mr-3 text-blue-400"></i>
+          未來領導者：陳國華
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 詳細行程內容區 -->
+  <section id="schedule" class="py-16 bg-[#0d0d0f] text-gray-100 relative">
+    <!-- 頂部標題 -->
+    <div class="text-center mb-16">
+      <h2 class="text-5xl md:text-6xl font-bold text-white mb-4">
+        詳細行程
+      </h2>
+    </div>
+    
+    <!-- 行程時間軸容器 -->
+    <div class="max-w-5xl mx-auto px-6">
+      <!-- 第0天 -->
+      <div class="schedule-day mb-20 opacity-0 transform translate-y-8 transition-all 0.6s ease">
+        <div class="day-header flex flex-col sm:flex-row sm:items-center gap-4 mb-8">
+          <div class="day-number bg-accent-blue text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold">0</div>
+          <div>
+            <h3 class="text-2xl md:text-3xl font-bold">第 0 天｜11月16日（六）</h3>
+            <p class="text-slate-500 text-lg">淡水 ➜ 桃園機場</p>
+          </div>
+        </div>
+        
+        <div class="day-content pl-0 sm:pl-20 border-l-2 border-gray-700 space-y-8 ml-8 sm:ml-0">
+          <div class="schedule-item relative sm:ml-6">
+            <!-- 時間點標記 -->
+            <div class="absolute left-0 sm:left-[-30px] top-1 w-6 h-6 rounded-full bg-accent-blue/20 border-2 border-accent-blue -translate-x-full sm:translate-x-0"></div>
+            
+            <div class="bg-gray-900/50 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow border border-gray-800">
+              <h4 class="font-bold text-lg text-accent-blue mb-2">21:00</h4>
+              <p class="mb-3">抵達桃園國際機場 第二航廈 3樓 23–24 櫃檯（阿聯酋航空）</p>
+              <div class="flex items-center text-gray-400 mt-2">
+                <i class="fa fa-plane mr-2"></i>
+                <span>航班：EK387 台北 ➜ 杜拜</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 第1天 -->
+      <div class="schedule-day mb-20 opacity-0 transform translate-y-8 transition-all 0.6s ease delay-100">
+        <div class="day-header flex flex-col sm:flex-row sm:items-center gap-4 mb-8">
+          <div class="day-number bg-accent-blue text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold">1</div>
+          <div>
+            <h3 class="text-2xl md:text-3xl font-bold">第 1 天｜11月17日（日）</h3>
+            <p class="text-slate-500 text-lg">台灣 ➜ 杜拜</p>
+          </div>
+        </div>
+        
+        <div class="day-content pl-0 sm:pl-20 border-l-2 border-gray-700 space-y-8 ml-8 sm:ml-0">
+          <div class="schedule-item relative sm:ml-6">
+            <div class="absolute left-0 sm:left-[-30px] top-1 w-6 h-6 rounded-full bg-accent-blue/20 border-2 border-accent-blue -translate-x-full sm:translate-x-0"></div>
+            
+            <div class="bg-gray-900/50 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow border border-gray-800">
+              <h4 class="font-bold text-lg text-accent-blue mb-2">06:15</h4>
+              <p class="mb-3">抵達杜拜國際機場（DXB Terminal 3）</p>
+              
+              <div class="mt-4 space-y-4">
+                <div class="flex items-start">
+                  <i class="fa fa-money text-amber-600 mt-1 mr-3"></i>
+                  <div>
+                    <h5 class="font-semibold">換匯與小費準備</h5>
+                    <p class="text-gray-400">抵達後可先前往外幣兌換處，建議準備適量現金，以方便支付日常小費與零星開銷。</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-start">
+                  <i class="fa fa-cutlery text-emerald-600 mt-1 mr-3"></i>
+                  <div>
+                    <h5 class="font-semibold">午餐與集合建議</h5>
+                    <p class="text-gray-400">可先享用一頓中餐（BurJuman Mall 或飯店周邊）<br>或先回飯店休息，傍晚再集合活動</p>
+                    <p class="text-gray-500 text-sm mt-1">集合地點：綠線AIFakidi站 老城區 👉Al Seef中的星巴克</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-start">
+                  <i class="fa fa-moon-o text-indigo-600 mt-1 mr-3"></i>
+                  <p class="text-gray-400">晚上自由活動或散步熟悉周邊環境</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 第2天 -->
+      <div class="schedule-day mb-20 opacity-0 transform translate-y-8 transition-all 0.6s ease delay-200">
+        <div class="day-header flex flex-col sm:flex-row sm:items-center gap-4 mb-8">
+          <div class="day-number bg-accent-blue text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold">2</div>
+          <div>
+            <h3 class="text-2xl md:text-3xl font-bold">第 2 天｜11月18日（一）</h3>
+            <p class="text-slate-500 text-lg">杜拜未來論壇 Day 1</p>
+          </div>
+        </div>
+        
+        <div class="day-content pl-0 sm:pl-20 border-l-2 border-gray-700 space-y-8 ml-8 sm:ml-0">
+          <div class="schedule-item relative sm:ml-6">
+            <div class="absolute left-0 sm:left-[-30px] top-1 w-6 h-6 rounded-full bg-accent-blue/20 border-2 border-accent-blue -translate-x-full sm:translate-x-0"></div>
+            
+            <div class="bg-gray-900/50 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow border border-gray-800">
+              <h4 class="font-bold text-lg text-accent-blue mb-2">08:00 – 09:00</h4>
+              <p>抵達會場（Dubai Future Forum）</p>
+              
+              <h4 class="font-bold text-lg text-accent-blue mb-2 mt-6">09:00 – 18:00</h4>
+              <p class="mb-4">參與論壇議程</p>
+              
+              <div class="bg-blue-900/30 p-4 rounded-lg border border-blue-800/50">
+                <p class="flex items-start">
+                  <i class="fa fa-camera text-blue-400 mt-1 mr-3"></i>
+                  <span class="font-medium">建議：全體團拍（穿著 TKU 校服或團服）</span>
+                </p>
+                <p class="flex items-start mt-2">
+                  <i class="fa fa-link text-blue-400 mt-1 mr-3"></i>
+                  <span>議程參考：<a href="https://www.dubaifuture.ae/dubai-future-forum-2025" class="text-accent-blue hover:underline" target="_blank">https://www.dubaifuture.ae/dubai-future-forum-2025</a></span>
+                </p>
+              </div>
+              
+              <p class="mt-6 flex items-start">
+                <i class="fa fa-moon-o text-indigo-400 mt-1 mr-3"></i>
+                <span>晚上自由活動或團體晚餐</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 第3天 -->
+      <div class="schedule-day mb-20 opacity-0 transform translate-y-8 transition-all 0.6s ease delay-300">
+        <div class="day-header flex flex-col sm:flex-row sm:items-center gap-4 mb-8">
+          <div class="day-number bg-accent-blue text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold">3</div>
+          <div>
+            <h3 class="text-2xl md:text-3xl font-bold">第 3 天｜11月19日（二）</h3>
+            <p class="text-slate-500 text-lg">杜拜未來論壇 Day 2</p>
+          </div>
+        </div>
+        
+        <div class="day-content pl-0 sm:pl-20 border-l-2 border-gray-700 space-y-8 ml-8 sm:ml-0">
+          <div class="schedule-item relative sm:ml-6">
+            <div class="absolute left-0 sm:left-[-30px] top-1 w-6 h-6 rounded-full bg-accent-blue/20 border-2 border-accent-blue -translate-x-full sm:translate-x-0"></div>
+            
+            <div class="bg-gray-900/50 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow border border-gray-800">
+              <h4 class="font-bold text-lg text-accent-blue mb-2">08:00 – 09:00</h4>
+              <p>抵達會場</p>
+              
+              <h4 class="font-bold text-lg text-accent-blue mb-2 mt-6">09:00 – 18:00</h4>
+              <p class="mb-4">第二天論壇議程</p>
+              
+              <div class="bg-purple-900/30 p-4 rounded-lg border border-purple-800/50 mb-6">
+                <p class="flex items-start">
+                  <i class="fa fa-handshake-o text-purple-400 mt-1 mr-3"></i>
+                  <span class="font-medium">可與國際與會者交流、拍照、蒐集資料、交換LinkedIn</span>
+                </p>
+              </div>
+              
+              <p class="flex items-start">
+                <i class="fa fa-moon-o text-indigo-400 mt-1 mr-3"></i>
+                <span>晚上自由活動或團體晚餐</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 第4天 -->
+      <div class="schedule-day mb-20 opacity-0 transform translate-y-8 transition-all 0.6s ease delay-400">
+        <div class="day-header flex flex-col sm:flex-row sm:items-center gap-4 mb-8">
+          <div class="day-number bg-accent-blue text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold">4</div>
+          <div>
+            <h3 class="text-2xl md:text-3xl font-bold">第 4 天｜11月20日（三）</h3>
+            <p class="text-slate-500 text-lg">杜拜一日遊（土豪的一天）</p>
+          </div>
+        </div>
+        
+        <div class="day-content pl-0 sm:pl-20 border-l-2 border-gray-700 space-y-8 ml-8 sm:ml-0">
+          <div class="schedule-item relative sm:ml-6">
+            <div class="absolute left-0 sm:left-[-30px] top-1 w-6 h-6 rounded-full bg-accent-blue/20 border-2 border-accent-blue -translate-x-full sm:translate-x-0"></div>
+            
+            <div class="bg-gray-900/50 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow border border-gray-800">
+              <p class="mb-6 text-amber-400 font-medium">建議行程（可討論調整）</p>
+              
+              <div class="space-y-6">
+                <div class="flex items-start">
+                  <i class="fa fa-subway text-blue-400 mt-1 mr-3"></i>
+                  <div>
+                    <p class="font-semibold">交通參考</p>
+                    <p class="text-gray-400">杜拜交通攻略｜杜拜捷運開箱》票價/搭乘方式/沿線景點推薦 - 許傑,旅行圖中</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-start">
+                  <i class="fa fa-map-marker text-red-400 mt-1 mr-3"></i>
+                  <div>
+                    <p class="font-semibold">推薦景點</p>
+                    <ul class="list-disc list-inside text-gray-400 space-y-2 mt-2">
+                      <li>綠線 Jumeirah Beach 朱美拉海灘</li>
+                      <li>搭乘杜拜捷運紅線至Burj Khalifa/Dubai Mall站
+                        <ul class="list-circle list-inside text-gray-500 ml-4 mt-1">
+                          <li>杜拜商場</li>
+                          <li>哈里發塔</li>
+                          <li>杜拜水族館和水下動物園（Dubai Aquarium＆Underwater Zoo）(自由活動)</li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 第5天 -->
+      <div class="schedule-day opacity-0 transform translate-y-8 transition-all 0.6s ease delay-500">
+        <div class="day-header flex flex-col sm:flex-row sm:items-center gap-4 mb-8">
+          <div class="day-number bg-accent-blue text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold">5</div>
+          <div>
+            <h3 class="text-2xl md:text-3xl font-bold">第 5 天｜11月21日（四）</h3>
+            <p class="text-slate-500 text-lg">杜拜 ➜ 台灣</p>
+          </div>
+        </div>
+        
+        <div class="day-content pl-0 sm:pl-20 border-l-2 border-gray-700 space-y-8 ml-8 sm:ml-0">
+          <div class="schedule-item relative sm:ml-6">
+            <div class="absolute left-0 sm:left-[-30px] top-1 w-6 h-6 rounded-full bg-accent-blue/20 border-2 border-accent-blue -translate-x-full sm:translate-x-0"></div>
+            
+            <div class="bg-gray-900/50 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow border border-gray-800">
+              <h4 class="font-bold text-lg text-accent-blue mb-2">00:00</h4>
+              <p>抵達杜拜機場（建議提前三小時報到）</p>
+              
+              <h4 class="font-bold text-lg text-accent-blue mb-2 mt-6">03:40 – 15:35</h4>
+              <p class="mb-3">杜拜 ➜ 台灣（EK386）</p>
+              
+              <div class="flex items-center text-gray-400 mt-4">
+                <i class="fa fa-home text-green-400 mr-2"></i>
+                <span>抵達時間：約 15:35 桃園國際機場 第二航廈</span>
+              </div>
+              
+              <p class="mt-4 text-gray-400 italic">回溫暖的小窩、遙遠的淡水</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+        <script src="https://cdn.jsdelivr.net/npm/gifuct-js@2.1.1/dist/gifuct.min.js"></script>
+        <script>
+          (function(){
+            const canvas = document.getElementById('gifCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let gifFrames = [];
+            let currentFrame = 0;
+            let timerId = null;
+            let isPlaying = false;
+            let io = null;
+
+            async function loadGif() {
+              try {
+                const lib = window.gifuct || window.Gifuct || {};
+                const parseGIF = lib.parseGIF;
+                const decompressFrames = lib.decompressFrames;
+                if (typeof parseGIF !== 'function' || typeof decompressFrames !== 'function') {
+                  console.error('gifuct-js 未正確載入');
+                  return;
+                }
+
+                const gifUrl = 'photo/1.gif';
+                const response = await fetch(gifUrl, { cache: 'no-store' });
+                const arrayBuffer = await response.arrayBuffer();
+                const uint8Array = new Uint8Array(arrayBuffer);
+
+                const gif = parseGIF(uint8Array);
+                gifFrames = decompressFrames(gif, true);
+
+                if (gifFrames.length > 0) {
+                  const { width, height } = gifFrames[0].dims;
+                  canvas.width = width;
+                  canvas.height = height;
+                  drawFrame(0);
+                }
+
+                // 僅在畫布可見時才開始播放，節省資源
+                if (isInViewport(canvas)) {
+                  playGif();
+                }
+              } catch (err) {
+                console.error('GIF 載入失敗：', err);
+              }
+            }
+
+            function drawFrame(index) {
+              if (!gifFrames.length) return;
+              const frame = gifFrames[index % gifFrames.length];
+              const { width, height, dx, dy } = frame.dims;
+              ctx.clearRect(0, 0, canvas.width, canvas.height);
+              const imgData = ctx.createImageData(width, height);
+              imgData.data.set(frame.patch);
+              ctx.putImageData(imgData, dx, dy);
+            }
+
+            function stopGif() {
+              if (timerId) {
+                clearTimeout(timerId);
+                timerId = null;
+              }
+              isPlaying = false;
+            }
+
+            function playGif() {
+              if (isPlaying || !gifFrames.length) return;
+              isPlaying = true;
+              const step = () => {
+                currentFrame = (currentFrame + 1) % gifFrames.length;
+                drawFrame(currentFrame);
+                const delay = (gifFrames[currentFrame].delay || 10) * 10; // 以 1/100s 為單位
+                timerId = setTimeout(step, delay);
+              };
+              step();
+            }
+
+            function isInViewport(el) {
+              const r = el.getBoundingClientRect();
+              return (
+                r.bottom > 0 &&
+                r.right > 0 &&
+                r.top < (window.innerHeight || document.documentElement.clientHeight) &&
+                r.left < (window.innerWidth || document.documentElement.clientWidth)
+              );
+            }
+
+            // 當畫布進出視口時自動暫停/恢復播放
+            io = new IntersectionObserver((entries) => {
+              entries.forEach((entry) => {
+                if (entry.target !== canvas) return;
+                if (entry.isIntersecting) {
+                  if (!isPlaying && gifFrames.length) {
+                    playGif();
+                  }
+                } else {
+                  stopGif();
+                }
+              });
+
+            }, { threshold: 0.2 });
+
+            io.observe(canvas);
+
+            // 分頁可見性變化：切換分頁時暫停，回到分頁且可見時恢復
+            document.addEventListener('visibilitychange', () => {
+              if (document.hidden) {
+                stopGif();
+              } else if (gifFrames.length && isInViewport(canvas)) {
+                playGif();
+              }
+            });
+
+            window.addEventListener('load', loadGif);
+            window.addEventListener('pagehide', () => { stopGif(); io && io.disconnect(); });
+          })();
+        </script>
+
+  <!-- 行前準備清單（取代舊的 prepare 區塊） -->
+  <section id="preparation" class="py-20 bg-slate-900 text-white">
+    <div class="max-w-6xl mx-auto px-6">
+      <!-- 標題區 -->
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-bold mb-4 relative inline-block">
+          行前準備清單
+          <span class="absolute -bottom-2 left-0 w-full h-1 bg-accent-blue rounded-full"></span>
+        </h2>
+        <p class="text-gray-400 max-w-2xl mx-auto">杜拜行程必備物品清單，確保旅途順利無虞</p>
+      </div>
+
+      <!-- 清單卡片容器 -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- 重要文件類 -->
+        <div class="prep-card bg-slate-800/50 rounded-xl p-6 border border-slate-700 hover:border-accent-blue/50 transition-all group">
+          <div class="prep-icon w-12 h-12 bg-accent-blue/20 rounded-lg flex items-center justify-center mb-6 group-hover:bg-accent-blue/30 transition-all">
+            <i class="fa fa-file-text-o text-2xl text-accent-blue"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-4">重要文件</h3>
+          <ul class="space-y-3">
+            <li class="prep-item flex items-start">
+              <input type="checkbox" id="doc1" class="mt-1 mr-3 accent-accent-blue rounded">
+              <label for="doc1" class="text-gray-300 hover:text-white transition-colors">護照與簽證（印出紙本並備份電子檔）</label>
+            </li>
+            <li class="prep-item flex items-start">
+              <input type="checkbox" id="doc2" class="mt-1 mr-3 accent-accent-blue rounded">
+              <label for="doc2" class="text-gray-300 hover:text-white transition-colors">論壇數位入場證（個人專用）</label>
+            </li>
+            <li class="prep-item flex items-start">
+              <input type="checkbox" id="doc3" class="mt-1 mr-3 accent-accent-blue rounded">
+              <label for="doc3" class="text-gray-300 hover:text-white transition-colors">機票與住宿確認文件（電子版＋紙本備份）</label>
+            </li>
+          </ul>
+        </div>
+
+        <!-- 電子用品類 -->
+        <div class="prep-card bg-slate-800/50 rounded-xl p-6 border border-slate-700 hover:border-accent-blue/50 transition-all group">
+          <div class="prep-icon w-12 h-12 bg-accent-blue/20 rounded-lg flex items-center justify-center mb-6 group-hover:bg-accent-blue/30 transition-all">
+            <i class="fa fa-plug text-2xl text-accent-blue"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-4">電子用品</h3>
+          <ul class="space-y-3">
+            <li class="prep-item flex items-start">
+              <input type="checkbox" id="elec1" class="mt-1 mr-3 accent-accent-blue rounded">
+              <label for="elec1" class="text-gray-300 hover:text-white transition-colors">eSIM 或旅遊 SIM 卡（建議提前購買）</label>
+            </li>
+            <li class="prep-item flex items-start">
+              <input type="checkbox" id="elec2" class="mt-1 mr-3 accent-accent-blue rounded">
+              <label for="elec2" class="text-gray-300 hover:text-white transition-colors">萬用轉接頭（Type G 英式三孔）</label>
+            </li>
+            <li class="prep-item flex items-start">
+              <input type="checkbox" id="elec3" class="mt-1 mr-3 accent-accent-blue rounded">
+              <label for="elec3" class="text-gray-300 hover:text-white transition-colors">行動電源（建議大容量）</label>
+            </li>
+            <li class="prep-item flex items-start">
+              <input type="checkbox" id="elec4" class="mt-1 mr-3 accent-accent-blue rounded">
+              <label for="elec4" class="text-gray-300 hover:text-white transition-colors">手機充電線、筆電充電器</label>
+            </li>
+            <li class="prep-item flex items-start">
+              <input type="checkbox" id="elec5" class="mt-1 mr-3 accent-accent-blue rounded">
+              <label for="elec5" class="text-gray-300 hover:text-white transition-colors">筆電或平板（含滑鼠、鍵盤）</label>
+            </li>
+            <li class="prep-item flex items-start">
+              <input type="checkbox" id="elec6" class="mt-1 mr-3 accent-accent-blue rounded">
+              <label for="elec6" class="text-gray-300 hover:text-white transition-colors">USB 隨身碟或雲端備份帳號</label>
+            </li>
+            <li class="prep-item flex items-start">
+              <input type="checkbox" id="elec7" class="mt-1 mr-3 accent-accent-blue rounded">
+              <label for="elec7" class="text-gray-300 hover:text-white transition-colors">耳機（可降噪者佳）</label>
+            </li>
+          </ul>
+        </div>
+
+        <!-- 資金與服裝類 -->
+        <div class="prep-card bg-slate-800/50 rounded-xl p-6 border border-slate-700 hover:border-accent-blue/50 transition-all group">
+          <div class="prep-icon w-12 h-12 bg-accent-blue/20 rounded-lg flex items-center justify-center mb-6 group-hover:bg-accent-blue/30 transition-all">
+            <i class="fa fa-credit-card text-2xl text-accent-blue"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-4">資金與服裝</h3>
+          <ul class="space-y-3">
+            <li class="prep-item flex items-start">
+              <input type="checkbox" id="fund1" class="mt-1 mr-3 accent-accent-blue rounded">
+              <label for="fund1" class="text-gray-300 hover:text-white transition-colors">現金 100～150 美元（於杜拜換成 AED）</label>
+            </li>
+            <li class="prep-item flex items-start">
+              <input type="checkbox" id="fund2" class="mt-1 mr-3 accent-accent-blue rounded">
+              <label for="fund2" class="text-gray-300 hover:text-white transition-colors">信用卡 / Visa Debit 卡（國際通用）</label>
+            </li>
+            <li class="prep-item flex items-start">
+              <input type="checkbox" id="fund3" class="mt-1 mr-3 accent-accent-blue rounded">
+              <label for="fund3" class="text-gray-300 hover:text-white transition-colors">淡江大學 T-Shirt（團體識別）</label>
+            </li>
+            <li class="prep-item flex items-start">
+              <input type="checkbox" id="fund4" class="mt-1 mr-3 accent-accent-blue rounded">
+              <label for="fund4" class="text-gray-300 hover:text-white transition-colors">正式服裝（參加論壇或正式場合）</label>
+            </li>
+          </ul>
+        </div>
+
+        <!-- 個人用品類 -->
+        <div class="prep-card bg-slate-800/50 rounded-xl p-6 border border-slate-700 hover:border-accent-blue/50 transition-all group md:col-span-2 lg:col-span-1">
+          <div class="prep-icon w-12 h-12 bg-accent-blue/20 rounded-lg flex items-center justify-center mb-6 group-hover:bg-accent-blue/30 transition-all">
+            <i class="fa fa-bath text-2xl text-accent-blue"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-4">個人用品</h3>
+          <ul class="space-y-3">
+            <li class="prep-item flex items-start">
+              <input type="checkbox" id="pers1" class="mt-1 mr-3 accent-accent-blue rounded">
+              <label for="pers1" class="text-gray-300 hover:text-white transition-colors">防曬乳、保濕用品與個人常用藥品</label>
+            </li>
+            <li class="prep-item flex items-start">
+              <input type="checkbox" id="pers2" class="mt-1 mr-3 accent-accent-blue rounded">
+              <label for="pers2" class="text-gray-300 hover:text-white transition-colors">盥洗用品（牙刷、牙膏、刮鬍刀等）</label>
+            </li>
+            <li class="prep-item flex items-start">
+              <input type="checkbox" id="pers3" class="mt-1 mr-3 accent-accent-blue rounded">
+              <label for="pers3" class="text-gray-300 hover:text-white transition-colors">面膜或保濕噴霧（杜拜氣候乾燥）</label>
+            </li>
+            <li class="prep-item flex items-start">
+              <input type="checkbox" id="pers4" class="mt-1 mr-3 accent-accent-blue rounded">
+              <label for="pers4" class="text-gray-300 hover:text-white transition-colors">個人衛生用品（依個人需求）</label>
+            </li>
+            <li class="prep-item flex items-start">
+              <input type="checkbox" id="pers5" class="mt-1 mr-3 accent-accent-blue rounded">
+              <label for="pers5" class="text-gray-300 hover:text-white transition-colors">小包衛生紙、濕紙巾</label>
+            </li>
+            <li class="prep-item flex items-start">
+              <input type="checkbox" id="pers6" class="mt-1 mr-3 accent-accent-blue rounded">
+              <label for="pers6" class="text-gray-300 hover:text-white transition-colors">可摺疊水瓶（通過安檢後可裝水）</label>
+            </li>
+          </ul>
+        </div>
+
+        <!-- 注意事項提示卡 -->
+        <div class="prep-card bg-gradient-to-br from-accent-blue/20 to-indigo-900/30 rounded-xl p-6 border border-accent-blue/30 md:col-span-2 lg:col-span-2">
+          <div class="flex items-start">
+            <div class="prep-icon w-12 h-12 bg-accent-blue/30 rounded-lg flex items-center justify-center mr-6 flex-shrink-0">
+              <i class="fa fa-lightbulb-o text-2xl text-accent-blue"></i>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold mb-4">溫馨提示</h3>
+              <ul class="space-y-2 text-gray-300">
+                <li class="flex items-start">
+                  <i class="fa fa-check-circle text-accent-blue mt-1 mr-2"></i>
+                  <span>杜拜電壓為 220V，插頭為英式三孔（Type G），請務必準備轉接頭</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fa fa-check-circle text-accent-blue mt-1 mr-2"></i>
+                  <span>當地氣候乾燥炎熱，建議隨身攜帶保濕用品與防曬乳</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fa fa-check-circle text-accent-blue mt-1 mr-2"></i>
+                  <span>重要文件建議拍照存檔至雲端，並分開存放紙本與電子設備</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fa fa-check-circle text-accent-blue mt-1 mr-2"></i>
+                  <span>團體活動時請穿著淡江大學 T-Shirt 便於識別</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    /* 清單卡片樣式 */
+    .prep-card { transition: all 0.3s ease; }
+    .prep-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3); }
+    /* 表單元素樣式 */
+    .prep-item input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; }
+    .prep-item input[type="checkbox"]:checked + label { text-decoration: line-through; color: #9ca3af; }
+    /* 響應式調整（輕量） */
+    @media (max-width: 768px) {
+      .grid-cols-1 md:grid-cols-2 lg:grid-cols-3 { grid-template-columns: 1fr; }
+      .md:col-span-2 { grid-column: auto; }
+    }
+  </style>
+
+  <script>
+    // 倒數計時器
+    function updateCountdown() {
+      const targetDate = new Date('2025-11-16T00:00:00').getTime();
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance < 0) {
+        document.getElementById('days').textContent = '00';
+        document.getElementById('hours').textContent = '00';
+        document.getElementById('minutes').textContent = '00';
+        document.getElementById('seconds').textContent = '00';
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById('days').textContent = String(days).padStart(2, '0');
+      document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+      document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+      document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+    }
+
+    // 立即執行一次，然後每秒更新
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
+
+  <script>
+    // 記住已勾選狀態（使用localStorage）
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedChecks = JSON.parse(localStorage.getItem('prepChecklist') || '{}');
+      Object.keys(savedChecks).forEach(key => {
+        const checkbox = document.getElementById(key);
+        if (checkbox && savedChecks[key]) checkbox.checked = true;
+      });
+
+      document.querySelectorAll('.prep-item input[type="checkbox"]').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+          const checks = JSON.parse(localStorage.getItem('prepChecklist') || '{}');
+          checks[this.id] = this.checked;
+          localStorage.setItem('prepChecklist', JSON.stringify(checks));
+        });
+      });
+    });
+  </script>
+
+  <!-- 重要事項 -->
+  <section id="notice" class="max-w-5xl mx-auto px-6 py-12 fade-element">
+    <h3 class="text-2xl mb-6">重要事項</h3>
+    <div class="bg-gray-900 rounded-2xl p-6 space-y-4">
+      <p> <strong>行李與電池規定：</strong> 禁止託運行動電源；隨身行李內可攜帶最多兩顆（100Wh 以下）。</p>
+      <p> <strong>食品與文化禁令：</strong> 禁止攜帶豬肉及製品、生鮮水果或酒類超過 5 公升；現金超過 28,000 美元須申報。</p>
+      <p><strong>備忘錄：</strong> 學長推薦「ABC COFFEE ROASTERS 法式吐司」！</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-black text-gray-500 text-center py-6 border-t border-gray-800">
+    © 2025 淡江大學未來共創團 FUTURES X TKU — Designed for Tamkang Co-Futures
+  </footer>
+  </div> <!-- 結束 app-content -->
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('mobileMenu').classList.toggle('hidden');
+    }
+
+    // 平滑捲動導航功能
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+          targetElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+          
+          const mobileMenu = document.getElementById('mobileMenu');
+          if (!mobileMenu.classList.contains('hidden')) {
+            toggleMenu();
+          }
+        }
+      });
+    });
+
+    // IntersectionObserver：當元素滾動進入視口時觸發淡入動畫
+    (function() {
+      const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.15
+      };
+
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('fade-in');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      // 直接觀察目前頁面上的 .fade-element
+      document.querySelectorAll('.fade-element').forEach(el => observer.observe(el));
+
+      // 詳細行程 Hero 區動畫觸發
+      const scheduleHeroObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            scheduleHeroObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      const scheduleHero = document.querySelector('.schedule-hero');
+      if (scheduleHero) {
+        scheduleHeroObserver.observe(scheduleHero);
+      }
+    })();
+
+    // Lazy-load & 自動播放 schedule 的影片：當影片進入視口時才設定 src 並播放
+    (function() {
+      const vid = document.getElementById('scheduleVideo');
+      if (!vid) return;
+
+      const videoObserver = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // 設定來源並載入（如果還沒設定）
+            const src = vid.dataset && vid.dataset.src;
+            if (src && !vid.src) {
+              vid.src = src;
+              // 觸發瀏覽器載入
+              vid.load();
+            }
+
+            // 盡量播放（影片為 muted，因此大多數瀏覽器允許自動播放）
+            const p = vid.play();
+            if (p && typeof p.catch === 'function') {
+              p.catch(() => {
+                // 若自動播放被瀏覽器阻擋，保留 controls 讓使用者手動播放
+              });
+            }
+
+            obs.unobserve(vid);
+          }
+        });
+      }, { root: null, threshold: 0.5 });
+
+      videoObserver.observe(vid);
+    })();
+
+    // 行程展開/收起功能
+    function toggleSchedule(index) {
+      const content = document.querySelectorAll('.schedule-content')[index];
+      const icon = document.querySelectorAll('.schedule-icon')[index];
+      
+      // 切換內容顯示狀態
+      content.classList.toggle('active');
+      // 切換圖標狀態
+      icon.classList.toggle('active');
+    }
+
+    // 分頁切換邏輯
+    function switchToCoreInfo() {
+      const currentSection = document.getElementById('current-section');
+      const coreInfoSection = document.getElementById('core-info-section');
+      
+      currentSection.style.opacity = '0';
+      currentSection.style.transform = 'translateY(20px)';
+      currentSection.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+      
+      setTimeout(() => {
+        currentSection.classList.add('hidden');
+        coreInfoSection.classList.remove('hidden');
+        coreInfoSection.classList.add('active');
+      }, 800);
+    }
+
+    function switchToCurrentPage() {
+      const currentSection = document.getElementById('current-section');
+      const coreInfoSection = document.getElementById('core-info-section');
+      
+      coreInfoSection.style.opacity = '0';
+      coreInfoSection.style.transform = 'translateY(20px)';
+      coreInfoSection.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+      
+      setTimeout(() => {
+        coreInfoSection.classList.add('hidden');
+        coreInfoSection.classList.remove('active');
+        currentSection.classList.remove('hidden');
+        currentSection.classList.add('active');
+      }, 800);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // 初始化頁面狀態
+      const currentSection = document.getElementById('current-section');
+      const coreInfoSection = document.getElementById('core-info-section');
+      
+      // 確保當前頁面顯示，核心資訊頁面隱藏
+
+    // 滾動監聽：首頁縮小淡出 + 第二頁背景漸顯 + 標題淡入
+    (function() {
+      const hero = document.getElementById('hero');
+      const heroOverlay = document.querySelector('.hero-overlay');
+      const introBg = document.querySelector('.intro-bg-item');
+      const heroCountdown = document.getElementById('hero-countdown');
+      const introTitle = document.querySelector('.intro-title-header');
+
+      function onScrollTransition() {
+        const scrollY = window.scrollY || window.pageYOffset;
+        const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+        const progress = Math.min(scrollY / windowHeight, 1);
+
+        if (hero) {
+          if (progress > 0.1) hero.classList.add('hero-scrolled');
+          else hero.classList.remove('hero-scrolled');
+        }
+        if (heroOverlay) {
+          if (progress > 0.1) heroOverlay.classList.add('scrolled');
+          else heroOverlay.classList.remove('scrolled');
+        }
+        if (introBg) {
+          if (progress > 0.3) introBg.classList.add('intro-bg-visible');
+          else introBg.classList.remove('intro-bg-visible');
+        }
+        if (heroCountdown && introTitle) {
+          if (progress > 0.5) {
+            heroCountdown.style.opacity = String(Math.max(0, 1 - progress * 2));
+            introTitle.style.opacity = String(Math.max(0, progress * 2 - 1));
+          } else {
+            heroCountdown.style.opacity = '1';
+            introTitle.style.opacity = '0';
+          }
+        }
+      }
+
+      window.addEventListener('scroll', onScrollTransition, { passive: true });
+      // 初次進入頁面也跑一次
+      onScrollTransition();
+    })();
+      currentSection.classList.add('active');
+      coreInfoSection.classList.remove('active');
+      
+      // 背景圖片輪播功能（如果有多張圖片）
+      const bgImages = document.querySelectorAll('.intro-bg');
+      if (bgImages.length > 1) {
+        let currentIndex = 0;
+        const totalImages = bgImages.length;
+        
+        function autoSwitch() {
+          bgImages.forEach(img => {
+            img.style.opacity = '0';
+          });
+          bgImages[currentIndex].style.opacity = '1';
+          currentIndex = (currentIndex + 1) % totalImages;
+          setTimeout(autoSwitch, 5000);
+        }
+        
+        autoSwitch();
+      }
+    });
+
+    // 逐字顯示文字函數
+    function typeWriterEffect(element, text, delay = 80) {
+      // 清空原有內容
+      element.innerHTML = '';
+      // 拆分文字為單個字符
+      const chars = text.split('');
+      
+      chars.forEach((char, index) => {
+        // 創建每個字符的span元素
+        const charSpan = document.createElement('span');
+        charSpan.textContent = char;
+        element.appendChild(charSpan);
+        
+        // 延時顯示每個字符
+        setTimeout(() => {
+          charSpan.style.opacity = '1';
+          charSpan.style.transform = 'translateY(0)';
+        }, index * delay);
+      });
+    }
+
+    // 核心資訊區轉化式轉場+逐字顯示整合邏輯
+    // 核心資訊區動畫（簡化版：IntersectionObserver + 鼠標視差）
+    function initIntroTransformTransition() {
+      const introSection = document.getElementById('intro');
+      if (!introSection) return;
+
+      const personImg = document.querySelector('.core-person');
+      const titleText = document.querySelector('.core-text h2');
+      const infoTexts = document.querySelector('.core-text .space-y-4');
+      
+      if (!personImg || !titleText || !infoTexts) return;
+
+      // 監聽核心資訊區進入視口
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // 人物圖漸顯上浮
+            personImg.style.opacity = '1';
+            personImg.style.transform = 'translateY(0) scale(1)';
+
+            // 標題文字漸顯
+            setTimeout(() => {
+              titleText.style.opacity = '1';
+              titleText.style.transform = 'translateY(0)';
+            }, 200);
+
+            // 信息文字延遲顯示
+            setTimeout(() => {
+              infoTexts.style.opacity = '1';
+              infoTexts.style.transform = 'translateY(0)';
+            }, 500);
+
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      observer.observe(introSection);
+
+      // 人物隨鼠標輕微移動（增強立體感）
+      introSection.addEventListener('mousemove', (e) => {
+        if (personImg.style.opacity !== '1') return; // 未顯示時不觸發
+
+        const rect = introSection.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5; // -0.5~0.5
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+        // 限制移動範圍（最大±10px）
+        personImg.style.transform = `translate(${x * 10}px, ${y * 10}px) scale(1)`;
+      });
+    }
+
+    // 核心資訊區到詳細行程區過渡效果（優化版）
+    function initScheduleTransition() {
+      const introSection = document.getElementById('intro');
+      const scheduleHero = document.getElementById('schedule-hero');
+      const scheduleContent = document.getElementById('schedule');
+      const transitionMarker = document.querySelector('.transition-marker');
+      const scheduleEntrance = document.querySelector('.schedule-entrance');
+      
+      if (!introSection || !scheduleHero || !scheduleContent || !transitionMarker) return;
+      
+      let lastProgress = 0;
+      let ticking = false;
+      
+      function updateTransition() {
+        const scrollY = window.scrollY;
+        const windowHeight = window.innerHeight;
+        const markerRect = transitionMarker.getBoundingClientRect();
+        const markerY = markerRect.top + scrollY;
+        
+        // 計算過渡進度（擴大過渡區間至1.2倍視窗高度）
+        const progress = Math.max(0, Math.min(1, 
+          (scrollY + windowHeight * 0.7 - markerY) / (windowHeight * 1.2)
+        ));
+        
+        if (Math.abs(progress - lastProgress) < 0.001) {
+          ticking = false;
+          return;
+        }
+        lastProgress = progress;
+        
+        // 1. 核心資訊區退出（保留輕微殘影）
+        introSection.style.opacity = String(1 - progress * 0.8);
+        if (progress > 0.1) {
+          introSection.classList.add('intro-transitioning');
+        } else {
+          introSection.classList.remove('intro-transitioning');
+        }
+        
+        // 2. 入口標記的顯示/淡出節奏
+        if (scheduleEntrance) {
+          if (progress > 0.2 && progress < 0.7) {
+            scheduleEntrance.style.opacity = String((progress - 0.2) / 0.5);
+          } else if (progress >= 0.7) {
+            scheduleEntrance.style.opacity = String(Math.max(0, 1 - (progress - 0.7) / 0.3));
+          } else {
+            scheduleEntrance.style.opacity = '0';
+          }
+        }
+        
+        // 3. 詳細行程區進場（與核心資訊區重疊）
+        if (progress > 0.4) {
+          scheduleHero.classList.add('schedule-visible');
+          const bgOpacity = Math.min(1, (progress - 0.4) / 0.6);
+          const scheduleBg = scheduleHero.querySelector('.schedule-bg');
+          if (scheduleBg) {
+            scheduleBg.style.opacity = String(bgOpacity);
+          }
+        } else {
+          scheduleHero.classList.remove('schedule-visible');
+        }
+        
+        // 4. 行程內容區顯示
+        if (progress > 0.8) {
+          scheduleContent.style.opacity = String((progress - 0.8) / 0.2);
+        } else {
+          scheduleContent.style.opacity = '0';
+        }
+        
+        ticking = false;
+      }
+      
+      function onScroll() {
+        if (!ticking) {
+          requestAnimationFrame(updateTransition);
+          ticking = true;
+        }
+      }
+      
+      window.addEventListener('scroll', onScroll, { passive: true });
+      updateTransition(); // 初始狀態
+    }
+
+    // 頁面加載後初始化
+    window.addEventListener('load', function() {
+      toggleSchedule(2);
+      initIntroTransformTransition();
+      initScheduleTransition();
+    });
+  </script>
+
+  <!-- Three.js 和粒子動畫 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    // 初始化場景
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.getElementById('particles').appendChild(renderer.domElement);
+
+    // 創建粒子
+    const particlesCount = 200;
+    const geometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(particlesCount * 3);
+
+    // 隨機分布粒子位置
+    for (let i = 0; i < particlesCount * 3; i++) {
+      positions[i] = (Math.random() - 0.5) * 30;
+    }
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+    // 粒子材質
+    const material = new THREE.PointsMaterial({
+      color: 0x00BFFF,
+      size: 0.08,
+      transparent: true,
+      opacity: 0.5,
+      blending: THREE.AdditiveBlending
+    });
+
+    // 創建粒子系統並添加到場景
+    const particles = new THREE.Points(geometry, material);
+    scene.add(particles);
+
+    // 相機位置
+    camera.position.z = 10;
+
+    // 粒子動畫
+    function animate() {
+      requestAnimationFrame(animate);
+      
+      // 粒子整體緩慢旋轉
+      particles.rotation.y += 0.0005;
+      particles.rotation.x += 0.0002;
+      
+      // 單個粒子輕微隨機位移
+      const positions = particles.geometry.attributes.position.array;
+      for (let i = 0; i < positions.length; i += 3) {
+        positions[i] += (Math.random() - 0.5) * 0.005;
+        positions[i + 1] += (Math.random() - 0.5) * 0.005;
+      }
+      particles.geometry.attributes.position.needsUpdate = true;
+
+      renderer.render(scene, camera);
+    }
+
+    // 窗口大小適配
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // 啟動動畫
+    animate();
+  </script>
+
+  
+
+  <script>
+    // 頁面載入後觸發行程項目的漸顯動畫
+    document.addEventListener('DOMContentLoaded', () => {
+      // 監聽元素進入視口
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      
+      // 監聽所有行程天數區塊
+      document.querySelectorAll('.schedule-day').forEach(day => {
+        observer.observe(day);
+      });
+    });
+  </script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+</body>
