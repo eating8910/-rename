@@ -6,6 +6,14 @@
   <title>FUTURES X TKU - 未來學家之旅</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Leaflet 地圖核心庫 -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- Leaflet 路線規劃插件 -->
+  <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
+  
 <style>
   :root {
     --bg:#000;
@@ -848,7 +856,7 @@
         <div class="day-header flex flex-col sm:flex-row sm:items-center gap-4 mb-8">
           <div class="day-number bg-accent-blue text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold">0</div>
           <div>
-            <h3 class="text-2xl md:text-3xl font-bold">第 0 天｜11月16日（六）</h3>
+            <h3 class="text-2xl md:text-3xl font-bold">第 0 天｜11月16日（日）</h3>
             <p class="text-slate-500 text-lg">淡水 ➜ 桃園機場</p>
           </div>
         </div>
@@ -875,7 +883,7 @@
         <div class="day-header flex flex-col sm:flex-row sm:items-center gap-4 mb-8">
           <div class="day-number bg-accent-blue text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold">1</div>
           <div>
-            <h3 class="text-2xl md:text-3xl font-bold">第 1 天｜11月17日（日）</h3>
+            <h3 class="text-2xl md:text-3xl font-bold">第 1 天｜11月17日（一）</h3>
             <p class="text-slate-500 text-lg">台灣 ➜ 杜拜</p>
           </div>
         </div>
@@ -907,6 +915,19 @@
                 </div>
                 
                 <div class="flex items-start">
+                  <i class="fa fa-id-card text-purple-600 mt-1 mr-3"></i>
+                  <div class="flex-1">
+                    <h5 class="font-semibold">領取 Dubai Future Forum 2025 Badge</h5>
+                    <p class="text-gray-400">前往 R23 站 👉 Emirates Towers 領取論壇識別證</p>
+                    <p class="text-gray-500 text-sm mt-1">Dubai Future Foundation<br>Emirates Towers, Boulevard Plaza Entrance, Mezzanine Floor</p>
+                    <button onclick="openMapModal()" class="mt-3 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors flex items-center gap-2 text-sm">
+                      <i class="fa fa-map-marker"></i>
+                      查看路線地圖
+                    </button>
+                  </div>
+                </div>
+                
+                <div class="flex items-start">
                   <i class="fa fa-moon-o text-indigo-600 mt-1 mr-3"></i>
                   <p class="text-gray-400">晚上自由活動或散步熟悉周邊環境</p>
                 </div>
@@ -921,7 +942,7 @@
         <div class="day-header flex flex-col sm:flex-row sm:items-center gap-4 mb-8">
           <div class="day-number bg-accent-blue text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold">2</div>
           <div>
-            <h3 class="text-2xl md:text-3xl font-bold">第 2 天｜11月18日（一）</h3>
+            <h3 class="text-2xl md:text-3xl font-bold">第 2 天｜11月18日（二）</h3>
             <p class="text-slate-500 text-lg">杜拜未來論壇 Day 1</p>
           </div>
         </div>
@@ -962,7 +983,7 @@
         <div class="day-header flex flex-col sm:flex-row sm:items-center gap-4 mb-8">
           <div class="day-number bg-accent-blue text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold">3</div>
           <div>
-            <h3 class="text-2xl md:text-3xl font-bold">第 3 天｜11月19日（二）</h3>
+            <h3 class="text-2xl md:text-3xl font-bold">第 3 天｜11月19日（三）</h3>
             <p class="text-slate-500 text-lg">杜拜未來論壇 Day 2</p>
           </div>
         </div>
@@ -999,8 +1020,8 @@
         <div class="day-header flex flex-col sm:flex-row sm:items-center gap-4 mb-8">
           <div class="day-number bg-accent-blue text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold">4</div>
           <div>
-            <h3 class="text-2xl md:text-3xl font-bold">第 4 天｜11月20日（三）</h3>
-            <p class="text-slate-500 text-lg">杜拜一日遊（土豪的一天）</p>
+            <h3 class="text-2xl md:text-3xl font-bold">第 4 天｜11月20日（四）</h3>
+            <p class="text-slate-500 text-lg">leaning day</p>
           </div>
         </div>
         
@@ -1047,7 +1068,7 @@
         <div class="day-header flex flex-col sm:flex-row sm:items-center gap-4 mb-8">
           <div class="day-number bg-accent-blue text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold">5</div>
           <div>
-            <h3 class="text-2xl md:text-3xl font-bold">第 5 天｜11月21日（四）</h3>
+            <h3 class="text-2xl md:text-3xl font-bold">第 5 天｜11月21日（五）</h3>
             <p class="text-slate-500 text-lg">杜拜 ➜ 台灣</p>
           </div>
         </div>
@@ -1216,15 +1237,19 @@
           <ul class="space-y-3">
             <li class="prep-item flex items-start">
               <input type="checkbox" id="doc1" class="mt-1 mr-3 accent-accent-blue rounded">
-              <label for="doc1" class="text-gray-300 hover:text-white transition-colors">護照與簽證（印出紙本並備份電子檔）</label>
+              <label for="doc1" class="text-gray-300 hover:text-white transition-colors">護照（檢查有效期限）</label>
             </li>
             <li class="prep-item flex items-start">
               <input type="checkbox" id="doc2" class="mt-1 mr-3 accent-accent-blue rounded">
-              <label for="doc2" class="text-gray-300 hover:text-white transition-colors">論壇數位入場證（個人專用）</label>
+              <label for="doc2" class="text-gray-300 hover:text-white transition-colors">簽證（印出紙本）</label>
             </li>
             <li class="prep-item flex items-start">
               <input type="checkbox" id="doc3" class="mt-1 mr-3 accent-accent-blue rounded">
-              <label for="doc3" class="text-gray-300 hover:text-white transition-colors">機票與住宿確認文件（電子版＋紙本備份）</label>
+              <label for="doc3" class="text-gray-300 hover:text-white transition-colors">電子文件備份（護照、簽證、機票、住宿證明儲存於手機）</label>
+            </li>
+            <li class="prep-item flex items-start">
+              <input type="checkbox" id="doc4" class="mt-1 mr-3 accent-accent-blue rounded">
+              <label for="doc4" class="text-gray-300 hover:text-white transition-colors">入場證 APP：DFF connect（論壇專用，不得轉讓）</label>
             </li>
           </ul>
         </div>
@@ -1238,19 +1263,19 @@
           <ul class="space-y-3">
             <li class="prep-item flex items-start">
               <input type="checkbox" id="elec1" class="mt-1 mr-3 accent-accent-blue rounded">
-              <label for="elec1" class="text-gray-300 hover:text-white transition-colors">eSIM 或旅遊 SIM 卡（建議提前購買）</label>
+              <label for="elec1" class="text-gray-300 hover:text-white transition-colors">行動電源、手機充飽電</label>
             </li>
             <li class="prep-item flex items-start">
               <input type="checkbox" id="elec2" class="mt-1 mr-3 accent-accent-blue rounded">
-              <label for="elec2" class="text-gray-300 hover:text-white transition-colors">萬用轉接頭（Type G 英式三孔）</label>
+              <label for="elec2" class="text-gray-300 hover:text-white transition-colors">eSIM 卡或旅遊 SIM 卡（建議提前購買阿聯酋支援方案）</label>
             </li>
             <li class="prep-item flex items-start">
               <input type="checkbox" id="elec3" class="mt-1 mr-3 accent-accent-blue rounded">
-              <label for="elec3" class="text-gray-300 hover:text-white transition-colors">行動電源（建議大容量）</label>
+              <label for="elec3" class="text-gray-300 hover:text-white transition-colors">萬用轉接頭（Type G 英式三孔，230V）</label>
             </li>
             <li class="prep-item flex items-start">
               <input type="checkbox" id="elec4" class="mt-1 mr-3 accent-accent-blue rounded">
-              <label for="elec4" class="text-gray-300 hover:text-white transition-colors">手機充電線、筆電充電器</label>
+              <label for="elec4" class="text-gray-300 hover:text-white transition-colors">充電線材（手機、筆電充電器）</label>
             </li>
             <li class="prep-item flex items-start">
               <input type="checkbox" id="elec5" class="mt-1 mr-3 accent-accent-blue rounded">
@@ -1276,7 +1301,7 @@
           <ul class="space-y-3">
             <li class="prep-item flex items-start">
               <input type="checkbox" id="fund1" class="mt-1 mr-3 accent-accent-blue rounded">
-              <label for="fund1" class="text-gray-300 hover:text-white transition-colors">現金 100～150 美元（於杜拜換成 AED）</label>
+              <label for="fund1" class="text-gray-300 hover:text-white transition-colors">現金 100～150 美元（抵達杜拜後換成 AED，用於小費、計程車等）</label>
             </li>
             <li class="prep-item flex items-start">
               <input type="checkbox" id="fund2" class="mt-1 mr-3 accent-accent-blue rounded">
@@ -1284,11 +1309,15 @@
             </li>
             <li class="prep-item flex items-start">
               <input type="checkbox" id="fund3" class="mt-1 mr-3 accent-accent-blue rounded">
-              <label for="fund3" class="text-gray-300 hover:text-white transition-colors">淡江大學 T-Shirt（團體識別）</label>
+              <label for="fund3" class="text-gray-300 hover:text-white transition-colors">淡江大學 T-Shirt（團體識別用）</label>
             </li>
             <li class="prep-item flex items-start">
               <input type="checkbox" id="fund4" class="mt-1 mr-3 accent-accent-blue rounded">
-              <label for="fund4" class="text-gray-300 hover:text-white transition-colors">正式服裝（參加論壇或正式場合）</label>
+              <label for="fund4" class="text-gray-300 hover:text-white transition-colors">碩士服（需提前借用）</label>
+            </li>
+            <li class="prep-item flex items-start">
+              <input type="checkbox" id="fund5" class="mt-1 mr-3 accent-accent-blue rounded">
+              <label for="fund5" class="text-gray-300 hover:text-white transition-colors">正式服裝（參加論壇或正式場合）</label>
             </li>
           </ul>
         </div>
@@ -1302,27 +1331,31 @@
           <ul class="space-y-3">
             <li class="prep-item flex items-start">
               <input type="checkbox" id="pers1" class="mt-1 mr-3 accent-accent-blue rounded">
-              <label for="pers1" class="text-gray-300 hover:text-white transition-colors">防曬乳、保濕用品與個人常用藥品</label>
+              <label for="pers1" class="text-gray-300 hover:text-white transition-colors">防曬乳、保濕用品（杜拜氣候乾熱）</label>
             </li>
             <li class="prep-item flex items-start">
               <input type="checkbox" id="pers2" class="mt-1 mr-3 accent-accent-blue rounded">
-              <label for="pers2" class="text-gray-300 hover:text-white transition-colors">盥洗用品（牙刷、牙膏、刮鬍刀等）</label>
+              <label for="pers2" class="text-gray-300 hover:text-white transition-colors">個人常用藥品（建議攜帶）</label>
             </li>
             <li class="prep-item flex items-start">
               <input type="checkbox" id="pers3" class="mt-1 mr-3 accent-accent-blue rounded">
-              <label for="pers3" class="text-gray-300 hover:text-white transition-colors">面膜或保濕噴霧（杜拜氣候乾燥）</label>
+              <label for="pers3" class="text-gray-300 hover:text-white transition-colors">盥洗用品（牙刷、牙膏、刮鬍刀等）</label>
             </li>
             <li class="prep-item flex items-start">
               <input type="checkbox" id="pers4" class="mt-1 mr-3 accent-accent-blue rounded">
-              <label for="pers4" class="text-gray-300 hover:text-white transition-colors">個人衛生用品（依個人需求）</label>
+              <label for="pers4" class="text-gray-300 hover:text-white transition-colors">面膜或保濕噴霧（對抗乾燥氣候）</label>
             </li>
             <li class="prep-item flex items-start">
               <input type="checkbox" id="pers5" class="mt-1 mr-3 accent-accent-blue rounded">
-              <label for="pers5" class="text-gray-300 hover:text-white transition-colors">小包衛生紙、濕紙巾</label>
+              <label for="pers5" class="text-gray-300 hover:text-white transition-colors">個人衛生用品（依個人需求）</label>
             </li>
             <li class="prep-item flex items-start">
               <input type="checkbox" id="pers6" class="mt-1 mr-3 accent-accent-blue rounded">
-              <label for="pers6" class="text-gray-300 hover:text-white transition-colors">可摺疊水瓶（通過安檢後可裝水）</label>
+              <label for="pers6" class="text-gray-300 hover:text-white transition-colors">小包衛生紙、濕紙巾</label>
+            </li>
+            <li class="prep-item flex items-start">
+              <input type="checkbox" id="pers7" class="mt-1 mr-3 accent-accent-blue rounded">
+              <label for="pers7" class="text-gray-300 hover:text-white transition-colors">可摺疊水瓶（通過安檢後可裝水）</label>
             </li>
           </ul>
         </div>
@@ -1338,19 +1371,27 @@
               <ul class="space-y-2 text-gray-300">
                 <li class="flex items-start">
                   <i class="fa fa-check-circle text-accent-blue mt-1 mr-2"></i>
-                  <span>杜拜電壓為 220V，插頭為英式三孔（Type G），請務必準備轉接頭</span>
+                  <span><strong>eSIM 卡購買：</strong>建議提前購買阿聯酋當地支援的 eSIM 方案，抵達後可立即啟用網路服務，確保行動通訊順暢</span>
                 </li>
                 <li class="flex items-start">
                   <i class="fa fa-check-circle text-accent-blue mt-1 mr-2"></i>
-                  <span>當地氣候乾燥炎熱，建議隨身攜帶保濕用品與防曬乳</span>
+                  <span><strong>電子文件備份：</strong>請將護照、簽證、機票、住宿證明的電子版本（PDF 或照片）儲存在手機中，以備查驗</span>
                 </li>
                 <li class="flex items-start">
                   <i class="fa fa-check-circle text-accent-blue mt-1 mr-2"></i>
-                  <span>重要文件建議拍照存檔至雲端，並分開存放紙本與電子設備</span>
+                  <span><strong>入場證 APP：</strong>論壇舉行前，主辦單位將寄送 DFF connect 專屬數位入場證，此入場證為個人專用，不得轉讓，請妥善保存。<a href="https://apps.apple.com/app/id6744746763" target="_blank" class="text-accent-blue hover:text-blue-400 underline ml-1">點此下載 DFF connect APP</a></span>
                 </li>
                 <li class="flex items-start">
                   <i class="fa fa-check-circle text-accent-blue mt-1 mr-2"></i>
-                  <span>團體活動時請穿著淡江大學 T-Shirt 便於識別</span>
+                  <span><strong>杜拜電壓：</strong>220V，插頭為英式三孔（Type G），請務必準備萬用轉接頭</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fa fa-check-circle text-accent-blue mt-1 mr-2"></i>
+                  <span><strong>氣候提醒：</strong>杜拜氣候乾燥炎熱，建議隨身攜帶保濕用品與防曬乳</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fa fa-check-circle text-accent-blue mt-1 mr-2"></i>
+                  <span><strong>碩士服借用：</strong>需要碩士服者請務必提前至學校借用</span>
                 </li>
               </ul>
             </div>
@@ -1937,4 +1978,219 @@
 	}
 	// ]]>
 </script>
+
+<!-- 地圖模態視窗 -->
+<div id="mapModal" onclick="closeMapModal()" class="fixed inset-0 bg-black/95 z-50 hidden flex items-center justify-center p-4">
+  <div onclick="event.stopPropagation()" class="relative w-full h-full max-w-7xl max-h-[90vh] bg-gray-900 rounded-xl overflow-hidden border-2 border-accent-blue shadow-2xl">
+    <!-- 關閉按鈕 -->
+    <button onclick="closeMapModal()" class="absolute top-4 right-4 z-[100] w-12 h-12 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center transition-colors shadow-lg">
+      <i class="fa fa-times text-2xl"></i>
+    </button>
+    
+    <!-- 資訊標題 -->
+    <div class="absolute top-4 left-4 z-40 bg-gray-900/95 px-6 py-3 rounded-lg border border-accent-blue">
+      <h3 class="text-accent-blue font-bold text-lg">R23 站 → Emirates Towers 路線</h3>
+      <p class="text-gray-300 text-sm">步行約 8 分鐘</p>
+    </div>
+    
+    <!-- 地圖容器 -->
+    <div id="routeMap" class="w-full h-full"></div>
+  </div>
+</div>
+
+<style>
+  /* 地圖相關樣式 */
+  #mapModal.show { display: flex !important; }
+  
+  /* 關閉按鈕樣式 */
+  #mapModal button {
+    background-color: #dc2626 !important;
+    color: white !important;
+  }
+  #mapModal button:hover {
+    background-color: #b91c1c !important;
+  }
+  
+  /* Leaflet 彈窗科技感樣式 */
+  .leaflet-popup-content-wrapper {
+    background: #121212;
+    border: 1px solid #00BFFF;
+    border-radius: 6px;
+  }
+  .leaflet-popup-content {
+    color: #00BFFF;
+    font-family: 'Noto Sans TC', sans-serif;
+    margin: 8px 12px;
+  }
+  .leaflet-popup-tip { 
+    background: #121212; 
+    border-color: #00BFFF; 
+  }
+  
+  /* 脈衝發光標記 */
+  .pulse-marker {
+    position: relative;
+  }
+  .pulse-marker::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    background: rgba(0, 191, 255, 0.6);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
+  }
+  
+  /* 自定義縮放控件樣式 */
+  .leaflet-control-zoom a {
+    background-color: #121212 !important;
+    color: #00BFFF !important;
+    border: 1px solid #00BFFF !important;
+  }
+  .leaflet-control-zoom a:hover {
+    background-color: #1a1a1a !important;
+  }
+</style>
+
+<script>
+  let map = null;
+  let routingControl = null;
+
+  function openMapModal() {
+    const modal = document.getElementById('mapModal');
+    modal.classList.add('show');
+    
+    // 延遲初始化地圖，確保容器已顯示
+    setTimeout(() => {
+      if (!map) {
+        initMap();
+      } else {
+        map.invalidateSize();
+      }
+    }, 100);
+  }
+
+  function closeMapModal() {
+    const modal = document.getElementById('mapModal');
+    modal.classList.remove('show');
+  }
+
+  function initMap() {
+    // 初始化地圖（中心定位到 Emirates Towers）
+    map = L.map('routeMap', {
+      zoomControl: false,
+      attributionControl: false
+    }).setView([25.2113, 55.2751], 16);
+
+    // 添加科技感深色底圖
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      maxZoom: 19,
+      tileSize: 512,
+      zoomOffset: -1
+    }).addTo(map);
+
+    // 自定義標記圖標 - 起點（綠色）
+    const startIcon = L.divIcon({
+      className: 'pulse-marker',
+      html: `<div style="width: 16px; height: 16px; background: #10B981; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 0 10px rgba(16, 185, 129, 0.8);"></div>`,
+      iconSize: [30, 30],
+      iconAnchor: [15, 15]
+    });
+    
+    // 自定義標記圖標 - 終點（紅色）
+    const endIcon = L.divIcon({
+      className: 'pulse-marker',
+      html: `<div style="width: 16px; height: 16px; background: #EF4444; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 0 10px rgba(239, 68, 68, 0.8);"></div>`,
+      iconSize: [30, 30],
+      iconAnchor: [15, 15]
+    });
+
+    // R23 站標記（起點 - 綠色）
+    const r23Station = L.marker([25.2130, 55.2700], { icon: startIcon })
+      .addTo(map)
+      .bindPopup(`
+        <div style="font-size: 14px; line-height: 1.6;">
+          <div style="font-size: 18px; font-weight: bold; color: #10B981; margin-bottom: 8px;">🚇 起點：R23 捷運站</div>
+          <div style="margin-bottom: 4px;">📍 地鐵紅線 (Red Line)</div>
+          <div style="margin-bottom: 4px;">⏱️ 步行時間：約 8 分鐘</div>
+          <div style="margin-bottom: 4px;">📏 步行距離：約 650 公尺</div>
+          <div style="color: #10B981; font-weight: bold;">➜ 出站後往南走</div>
+        </div>
+      `, { maxWidth: 300 })
+      .openPopup();
+
+    // 領取點標記（終點 - 紅色）
+    const destination = L.marker([25.2113, 55.2751], { icon: endIcon })
+      .addTo(map)
+      .bindPopup(`
+        <div style="font-size: 14px; line-height: 1.6;">
+          <div style="font-size: 18px; font-weight: bold; color: #EF4444; margin-bottom: 8px;">🎯 終點：論壇識別證領取處</div>
+          <div style="margin-bottom: 4px;">🏢 <strong>Dubai Future Foundation</strong></div>
+          <div style="margin-bottom: 4px;">📍 Emirates Towers</div>
+          <div style="margin-bottom: 4px;">🚪 Boulevard Plaza Entrance</div>
+          <div style="margin-bottom: 4px;">🏛️ 夾層樓 (Mezzanine Floor)</div>
+          <div style="color: #EF4444; font-weight: bold; margin-top: 8px;">✓ 抵達目的地</div>
+        </div>
+      `, { maxWidth: 300 });
+
+    // 添加永久顯示的中文標籤
+    const startLabel = L.divIcon({
+      className: 'map-label',
+      html: `<div style="background: #10B981; color: white; padding: 6px 12px; border-radius: 6px; font-weight: bold; white-space: nowrap; box-shadow: 0 2px 8px rgba(0,0,0,0.3); font-size: 13px;">🚇 R23 捷運站（起點）</div>`,
+      iconSize: [120, 30],
+      iconAnchor: [60, -25]
+    });
+    
+    const endLabel = L.divIcon({
+      className: 'map-label',
+      html: `<div style="background: #EF4444; color: white; padding: 6px 12px; border-radius: 6px; font-weight: bold; white-space: nowrap; box-shadow: 0 2px 8px rgba(0,0,0,0.3); font-size: 13px;">🎯 Emirates Towers（終點）</div>`,
+      iconSize: [180, 30],
+      iconAnchor: [90, -25]
+    });
+    
+    L.marker([25.2130, 55.2700], { icon: startLabel }).addTo(map);
+    L.marker([25.2113, 55.2751], { icon: endLabel }).addTo(map);
+
+    // 添加動態路線
+    routingControl = L.Routing.control({
+      waypoints: [
+        L.latLng(25.2130, 55.2700), // R23 站
+        L.latLng(25.2113, 55.2751)  // Emirates Towers
+      ],
+      routeWhileDragging: false,
+      showAlternatives: false,
+      lineOptions: {
+        styles: [{
+          color: '#00BFFF',
+          weight: 4,
+          opacity: 0.8,
+          dashArray: '10, 10',
+          lineJoin: 'round'
+        }]
+      },
+      show: false,
+      createMarker: function() { return null; } // 不顯示預設標記（使用我們的自定義標記）
+    }).addTo(map);
+
+    // 添加縮放控件
+    L.control.zoom({
+      position: 'bottomright'
+    }).addTo(map);
+  }
+
+  // ESC 鍵關閉模態視窗
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeMapModal();
+    }
+  });
+</script>
+
 </body>
